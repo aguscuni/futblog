@@ -11,6 +11,8 @@
 
     {% load bootstrap4 %}
 
+    {% load widget_tweaks %}
+
     {% bootstrap_css %}
 
     {% load static %}
@@ -119,15 +121,21 @@
       </div>
 
       <div class="table-responsive">
-        <form>
+
+        <form method="POST" encypte="multipart/form-data">
+
+            {% csrf_token %}
+
             <div class="form-group">
               <label for="nombre" class="negritatxt">Nombre</label>
-              <input type="text" class="form-control" id="nombre" name="nombre" aria-describedby="nombreHelp" required>
+              {{ form.nombre|add_class:"form-control" }}
             </div>
+
             <div class="form-group">
                 <label for="detalles" class="negritatxt">Detalles</label>
-                <textarea class="form-control" id="detalles" rows="3" required></textarea>
+                <textarea class="form-control" id="detalles" name="detalles" rows="3" required></textarea>
             </div>
+
             <button type="submit" class="btn btn-primary">Aceptar</button>
           </form>
 

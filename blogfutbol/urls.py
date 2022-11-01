@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from categorias.views import ListadoCategorias, CrearCategoria
+from categorias.views import ListadoCategorias, CrearCategoria, EditarCategoria, EliminarCategoria
 from detallesblog.views import DetallesBlog
 from entradas.views import ListadoEntradas, CrearEntrada
 from usuarios.views import ListadoUsuarios, CrearUsuario
@@ -26,39 +26,13 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path(
-        "categorias/",
-        ListadoCategorias.as_view(template_name="categorias/index.html"),
-        name="listadodecategorias",
-    ),
-    path(
-        "categorias/crear",
-        CrearCategoria.as_view(template_name="categorias/crear.html"),
-        name="crearcategoria",
-    ),
-    path(
-        "detallesblog/",
-        DetallesBlog.as_view(template_name="detallesblog/index.html"),
-        name="detallesblog",
-    ),
-    path(
-        "entradas/",
-        ListadoEntradas.as_view(template_name="entradas/index.html"),
-        name="listadodeentradas",
-    ),
-    path(
-        "entradas/crear",
-        CrearEntrada.as_view(template_name="entradas/crear.html"),
-        name="crearentrada",
-    ),
-    path(
-        "usuarios/",
-        ListadoUsuarios.as_view(template_name="usuarios/index.html"),
-        name="listadodeusuarios",
-    ),
-    path(
-        "usuarios/crear",
-        CrearUsuario.as_view(template_name="usuarios/crear.html"),
-        name="crearusuario",
-    ),
+    path("categorias/", ListadoCategorias.as_view(template_name="categorias/index.html"), name="listadodecategorias"),
+    path("categorias/crear", CrearCategoria.as_view(template_name="categorias/crear.html"), name="crearcategoria"),
+    path("categorias/editar/<int:pk>", EditarCategoria.as_view(template_name="categorias/editar.html"), name="editarcategoria"),
+    path("categorias/eliminar/<int:pk>", EliminarCategoria.as_view(), name="eliminarcategoria"),
+    path("detallesblog/", DetallesBlog.as_view(template_name="detallesblog/index.html"), name="detallesblog"),
+    path("entradas/", ListadoEntradas.as_view(template_name="entradas/index.html"), name="listadodeentradas"),
+    path("entradas/crear", CrearEntrada.as_view(template_name="entradas/crear.html"), name="crearentrada"),
+    path("usuarios/", ListadoUsuarios.as_view(template_name="usuarios/index.html"), name="listadodeusuarios"),
+    path("usuarios/crear", CrearUsuario.as_view(template_name="usuarios/crear.html"), name="crearusuario"),
 ]

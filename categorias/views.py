@@ -16,5 +16,30 @@ class ListadoCategorias(ListView):
     model = Categorias
 
 
-class CrearCategoria(TemplateView):
-    template_name = "crear.html"
+class CrearCategoria(SuccessMessageMixin, CreateView):
+    model = Categorias
+    form = Categorias
+    fields = "__all__"
+    success_message = "Categoría creada correctamente!"
+
+    def get_success_url(self):
+        return reverse("listadodecategorias")
+
+class EditarCategoria(SuccessMessageMixin, UpdateView):
+    model = Categorias
+    form = Categorias
+    fields = "__all__"
+    success_message = "Categoría editada correctamente!"
+
+    def get_success_url(self):
+        return reverse("listadodecategorias")
+
+class EliminarCategoria(SuccessMessageMixin, DeleteView):
+    model = Categorias
+    form = Categorias
+    fields = "__all__"
+
+    def get_success_murl(self):
+        success_message = "Categoría eliminada correctamente!"
+        messages.success(self.request, (success_message))
+        return reverse("listadodecateogiras")

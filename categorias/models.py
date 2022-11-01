@@ -6,7 +6,7 @@ from django.utils import timezone
 
 
 class Categorias(models.Model):
-    nombre = models.CharField(max_length=100, default="DEFAULT VALUE")
+    nombre = models.CharField(max_length=100)
     detalles = models.CharField(max_length=1000, default="DEFAULT VALUE")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
