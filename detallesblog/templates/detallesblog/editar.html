@@ -16,6 +16,7 @@
     {% load static %}
 
     <link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/estilos.css' %}">
     
     {% load icon %}
 
@@ -77,17 +78,17 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="{% url 'listadodecategorias' %}">
+            <a class="nav-link" href="{% url 'listadodecategorias' %}">
               <span data-feather="grid"></span>
               {% icon "grid" %}
-              Categorías <span class="sr-only">(current)</span>
+              Categorías
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'detallesblog' %}">
+            <a class="nav-link active" href="{% url 'detallesblog' %}">
               <span data-feather="align-justify"></span>
               {% icon "align-justify" %}
-              Detalles Blog
+              Detalles Blog <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
@@ -113,85 +114,37 @@
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Categorías</h1>
+        <h1 class="h2">Detalles del Blog</h1>
 
       </div>
 
-      <div class="table-responsive">
-        <a type="button" class="btn btn-success mb-3 btn-sm" href="{% url 'crearcategoria' %}">Agregar</a>
+      <form method="POST" enctype="multipart/form-data">
 
-        {% if messages %}
+      {% csrf_token %}
 
-          {% for message in messages %}
+        <div class="form-group">
+            <label for="detalles" class="negritatxt">Detalles</label>
+            <textarea class="form-control" id="detalles" name="detalles" value="{{ detallesblog.detalles }}" rows="3" required>{{ detallesblog.detalles }}</textarea>
+        </div>
 
-            <div {%if message.tags %} class="alert alert-primary" role="alert" {% endif %}>
+        <div class="form-group">
+            <label for="logo" class="negritatxt">Logo</label>
+            <input type="file" class="form-control-file" id="logo" name="logo">
 
-              {{ message }}
+            <p class="negritatxt mt-5">Imagen Actual:</p>
+            <img src="{% static 'uploads/' %}{{ detallesblog.logo }}" class="img-fluid" width="150" height="150" alt="{{ detallesblog.logo }}"></img>
 
-            </div>
-          
-          {% endfor %}
+        </div>
 
-        {% endif %}
-
-        <table class="table table-striped table-sm">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Detalles</th>
-              <th>Fecha de creación</th>
-              <th>Fecha de actualización</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for categoria in object_list %}
-            <tr>
-              <td>{{ categoria.nombre }}</td>
-              <td>{{ categoria.detalles }}</td>
-              <td>{{ categoria.created_at }}</td>
-              <td>{{ categoria.updated_at }}</td>
-              <td>
-                
-                <form method="POST" action="/categorias/eliminar/{{categoria.id}}">
-
-                  {% csrf_token %}
-
-                  <a type="button" href="/categorias/editar/{{categoria.id}}" class="btn btn-info btn-sm">Editar</a>
-
-                  <button type="submit" onclick="return eliminar();" class="btn btn-danger btn-sm">Eliminar</button>
-
-                </form>
-              </td>
-            </tr>
-
-          {% endfor %}
-           
-          </tbody>
-        </table>
-      </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </form>
     </main>
   </div>
 </div>
 
     {% bootstrap_javascript jquery='full' %}
 
-  <script type="text/javascript" src="{% static 'js/feather.min.js' %}"></script>
-
-  <script type="text/javascript">
-
-    function eliminar() {
-
-      var x = confirm("Está seguro de eliminar la categoría?");
-
-      if(x)
-        return true;
-      else
-        return false;
-
-    }
-
-  </script>
+    <script type="text/javascript" src="{% static 'js/feather.min.js' %}"></script>
 
   </body>
 </html>

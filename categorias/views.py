@@ -39,7 +39,7 @@ class EliminarCategoria(SuccessMessageMixin, DeleteView):
     form = Categorias
     fields = "__all__"
 
-    def get_success_murl(self):
+    def get_success_url(self):
         success_message = "Categoría eliminada correctamente!"
         messages.success(self.request, (success_message))
-        return reverse("listadodecateogiras")
+        return reverse("listadodecategorias")

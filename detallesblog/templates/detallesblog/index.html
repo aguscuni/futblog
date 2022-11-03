@@ -118,19 +118,45 @@
 
       </div>
 
-      <form>
-        <div class="form-group">
-            <label for="detalles" class="negritatxt">Detalles</label>
-            <textarea class="form-control" id="detalles" rows="3" required></textarea>
-        </div>
+      {% if messages %}
 
-        <div class="form-group">
-            <label for="logo" class="negritatxt">Logo</label>
-            <input type="file" class="form-control-file" id="logo" required>
-        </div>
+        {% for message in messages %}
 
-        <button type="submit" class="btn btn-primary">Guardar</button>
-      </form>
+        <div {%if message.tags %} class="alert alert-primary" role="alert" {% endif %}>
+
+          {{ message }}
+
+        </div>
+      
+        {% endfor %}
+
+    {% endif %}
+
+      {% for detallesblog in object_list %}
+
+        <label for="detalles" class="negritatxt">Detalles</label>
+
+        <p>
+            {{ detallesblog.detalles }}
+        </p>
+
+        <label for="logo" class="negritatxt">Logo</label>
+
+        <p>
+            <img src="{% static 'uploads/' %}{{ detallesblog.logo }}" class="img-fluid" width="150" height="150" alt="{{ detallesblog.logo }}"></img>
+        </p>
+
+        <label for="updated_at" class="negritatxt">Fecha de actualización</label>
+
+        <p>
+            {{ detallesblog.updated_at }}
+
+        </p>
+
+        <a href="/detallesblog/editar/{{ detallesblog.id }}" title="editar" type="button" class="btn-btn-primary">Editar datos</a>
+
+      {% endfor %}
+    
     </main>
   </div>
 </div>

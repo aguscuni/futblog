@@ -11,5 +11,14 @@ from django import forms
 # Create your views here.
 
 
-class DetallesBlog(ListView):
+class MostrarDetallesBlog(ListView):
     model = DetallesBlog
+
+class EditarDetallesBlog(SuccessMessageMixin, UpdateView):
+    model = DetallesBlog
+    form = DetallesBlog
+    fields = "__all__"
+    success_message = "Detalle(s) editado(s) correctamente!"
+
+    def get_success_url(self):
+        return reverse("detallesblog")
